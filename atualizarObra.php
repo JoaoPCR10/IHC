@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Consultar Acervo</title>
+    <title>Atualizar Obra</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@
               <a class="nav-link" href="consultarAcervo.php">Consultar Acervo<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="sobre.php">Sobre</a>
+              <a class="nav-link" href="sobreF.php">Sobre</a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">
@@ -53,12 +53,11 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <br><br>
         <div class="container">
-          <h1 class="display-5">TEM CERTEZA QUE DESEJA EXCLUIR ESTA OBRA?</h1>
-            
+          <h1 class="display-3">ATUALIZAR OBRA</h1>
 
               
             
-<?php 
+            <?php 
             
     include("class/conexao.php");
 
@@ -77,13 +76,44 @@
 ?>
             
             
-        <br>
-        <div class="form-group"> 
-            <input class="btn btn-primary btn-lg" value="Voltar">
-            <a href="exclui_obra.php?id=<?php echo $dado["id"]; ?>"><button type="button" type="submit" class="btn btn-danger btn-lg">Excluir</button></a>
-        </div>
-    </form>
-</main>
+            
+               <form method="POST" action="atlz_cad_obra.php?id=<?php echo $dado["id"]; ?>">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Título</label>
+      <input type="text" class="form-control" name="txt_titulo_obra" value="<?php echo $dado ["titulo"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Autor</label>
+      <input type="text" class="form-control" name="txt_autor_obra"  value="<?php echo $dado ["autor"];  ?>">
+    </div>
+                   </div>   
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Assunto</label>
+      <input type="text" class="form-control" name="txt_assunto_obra" value="<?php echo $dado ["assunto"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Editora</label>
+      <input type="text" class="form-control" name="txt_editora_obra"  value="<?php echo $dado ["editora"];  ?>">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Ano de Publicação</label>
+      <input type="text" class="form-control" name="txt_ano_obra"  value="<?php echo $dado ["ano"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Número de Exemplares</label>
+      <input type="number" class="form-control" name="txt_exemplares_obra" value="<?php echo $dado ["exemplares"];  ?>">
+    </div>
+  </div>
+                   <br>
+      <div class="form-group"> 
+          <input class="btn btn-primary btn-lg" type="submit" value="Atualizar">
+  </div>
+  
+            </form></main>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

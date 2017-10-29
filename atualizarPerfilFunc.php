@@ -33,7 +33,7 @@
               <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="sobre.php">Sobre</a>
+              <a class="nav-link" href="sobreF.php">Sobre</a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">

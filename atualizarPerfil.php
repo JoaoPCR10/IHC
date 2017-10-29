@@ -1,12 +1,3 @@
-<?php
-	include_once("conexao.php");
- 
-    if(!isset($_SESSION))
-        session_start();
-   
-    
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Reservas</title>
+    <title>Atualizar Perfil</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,10 +27,10 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="pagUsuario.php">Perfil <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
+              <a class="nav-link" href="consultarAcervo.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="sobre.php">Sobre</a>
@@ -57,26 +48,19 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="pagUsuarioFunc.php">Perfil </a>
+              <a class="nav-link " href="pagUsuario.php">Perfil </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="reservasFunc.php">Reservas<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="reservasAluno.php">Reservas</a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="obra.php">Obras</a>
-            </li>
-              <li class="nav-item">
-              <a class="nav-link" href="emprestimo.php">Emprestimo</a>
-            </li>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link" href="devolucao.php">Devolução </a>
+              <a class="nav-link" href="emprestimoAluno.php">Empréstimos</a>
             </li>
           </ul>
 
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="atualizarPerfil.php">Atualizar Perfil</a>
+              <a class="nav-link active" href="atualizarPerfil.php">Atualizar Perfil<span class="sr-only">(current)</span></a>
             </li>
              <br><br><br><br>
           </ul>
@@ -95,50 +79,72 @@
         </nav>
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          
-<?php
-    //echo $_SESSION['usuario_logado'];
-    $consulta = "SELECT * FROM reserva";
-    $con = mysqli_query($conn,$consulta);
-    
-   
-?>              
+          <h3 class="display-4">ATUALIZAR PERFIL</h3>
             
-          <h2>Reservas</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Aluno</th>
-                  <th>Matrícula</th>
-                  <th>Título</th>
-                  <th>Autor</th>
-                  <th>Editora</th>
-                  <th>Data de Reserva</th>
-                  <th>Cancelar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php 
-                    while ($dado = $con->fetch_array()){
-                        $consultal = "SELECT * FROM obra WHERE id = $dado[id_obra]";
-                        $con = mysqli_query($conn,$consultal);
-                        $dadol = $con->fetch_array();   
-                  
-                ?>
-                <tr>
-                  <td><?php echo $dadol ["titulo"]; ?></td>
-                  <td><?php echo $dadol ["autor"]; ?></td>
-                  <td><?php echo $dadol ["assunto"]; ?></td>
-                  <td><?php echo $dadol ["editora"]; ?></td>
-                  <td><?php echo $dadol ["ano"]; ?></td>
-                  <td><?php echo $dado ["data"]; ?></td>
-                  <td><a href="cancelaReserva.php?id=<?php echo $dado["id"]; ?>">Cancelar</a></td>
-                </tr>
-                  <?php } ?>
-              </tbody>
-            </table>
-          </div>
+            
+            <?php 
+            
+    include("class/conexao.php");
+
+	if(!isset($_SESSION))
+        session_start();
+
+        $sql_code = "SELECT * FROM usuario WHERE id = '$_SESSION[id]'";
+		$con = $mysqli->query($sql_code) or die($mysqli->error);
+		$dado = $con->fetch_assoc();
+               
+        echo $_SESSION['usuario_conectado'];
+?>
+              
+            <form method="POST" action="atlz_cad_usuario.php?id=<?php echo $dado["id"]; ?>">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Nome</label>
+      <input type="text" class="form-control" name="nome" value="<?php echo $dado ["nome"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Sobrenome</label>
+      <input type="text" class="form-control" name="sobrenome" value="<?php echo $dado ["sobrenome"];  ?>">
+    </div>
+  </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+      <label for="inputState">Sexo</label>
+      <select id="inputState" name="sexo" class="form-control">
+        <option selected><?php echo $dado ["sexo"];  ?></option>
+        <option>Feminino</option>
+        <option>Masculino</option>
+        <option>Prefiro não optar</option>
+            </select></div>
+     </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Curso</label>
+      <input type="text" class="form-control" name="curso" value="<?php echo $dado ["curso"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Matrícula</label>
+      <input type="text" class="form-control" name="matricula"  value="<?php echo $dado ["matricula"];  ?>">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="text" class="form-control" name="email" value="<?php echo $dado ["email"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Senha</label>
+      <input type="password" class="form-control" name="senha" value="<?php echo $dado ["senha"];  ?>">
+    </div>
+  </div>
+        <br>        
+  <div class="form-group"> 
+       <input class="btn btn-primary btn-lg" type="submit" value="Atualizar">
+  </div>
+  
+            </form></div></main>
+      
+</form>
         </main>
       </div>
     </div>

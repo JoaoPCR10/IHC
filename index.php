@@ -85,7 +85,7 @@ if(isset($_POST['login'])){
               <h3 class="masthead-brand">SCB</h3>
               <nav class="nav nav-masthead">
                 <a class="nav-link active" href="#">Home</a>
-                <a class="nav-link" href="sobre.php">Sobre</a>
+                <a class="nav-link" href="sobreNL.php">Sobre</a>
                 <a class="nav-link" href="cadastro.php">Cadastrar</a>
                 <a class="nav-link" href="#"></a>
                   

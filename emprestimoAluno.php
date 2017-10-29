@@ -1,7 +1,10 @@
 <?php
-    include("class/conexao.php");
+	include_once("conexao.php");
+ 
     if(!isset($_SESSION))
         session_start();
+   
+    
 ?>
 
 <!doctype html>
@@ -13,7 +16,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>SCB - Bbliotecário</title>
+    <title>Reservas</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -33,10 +36,10 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Perfil <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="pagUsuario.php">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
+              <a class="nav-link" href="consultarAcervo.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="sobre.php">Sobre</a>
@@ -54,20 +57,14 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Perfil <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="pagUsuario.php">Perfil</a>
+                
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="reservasFunc.php">Reservas</a>
+              <a class="nav-link" href="reservasAluno.php">Reservas</a>
             </li>
-              <li class="nav-item">
-              <a class="nav-link" href="obra.php">Obras</a>
-            </li>
-              <li class="nav-item">
-              <a class="nav-link" href="emprestimo.php">Emprestimo</a>
-            </li>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link" href="devolucao.php">Devolução</a>
+            <li class="nav-item">
+              <a class="nav-link active" href="emprestimoAluno.php">Empréstimos<span class="sr-only">(current)</span></a>
             </li>
           </ul>
 
@@ -92,28 +89,52 @@
         </nav>
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h1>Bem Vindo ao SCB</h1>
-<h2>Acesso Rápido</h2>
-
-          <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="consultarAcervoF.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <button type="button" class="btn btn-outline-primary btn-lg">Consultar Acervo</button>
-            </div>
-            </a>    
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="cadastroObra.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Cadastrar Obra</button></a>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="emprestimo.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Realizar Empréstimo</button></a>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="devolucao.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Realizar Devolução</button></a>
-            </div>
-          </section>
+          
+<?php
+    //echo $_SESSION['usuario_logado'];
+    $consulta = "SELECT * FROM emprestimo WHERE idaluno LIKE '$_SESSION[usuario_logado]'";
+    $con = mysqli_query($conn,$consulta);
+    
+   
+?>              
+            
+          <h2>Suas Reservas</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Assunto</th>
+                  <th>Editora</th>
+                  <th>Ano</th>
+                  <th>Data de Empréstimo</th>
+                  <th>Data de Devolução</th>
+                  <th>Renovar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php 
+                    while ($dado = $con->fetch_array()){
+                        $consultal = "SELECT * FROM obra WHERE id = $dado[idobra]";
+                        $con = mysqli_query($conn,$consultal);
+                        $dadol = $con->fetch_array();   
+                  
+                ?>
+                <tr>
+                  <td><?php echo $dadol ["titulo"]; ?></td>
+                  <td><?php echo $dadol ["autor"]; ?></td>
+                  <td><?php echo $dadol ["assunto"]; ?></td>
+                  <td><?php echo $dadol ["editora"]; ?></td>
+                  <td><?php echo $dadol ["ano"]; ?></td>
+                  <td><?php echo $dado ["dataemprestimo"]; ?></td>
+                  <td><?php echo $dado ["datadevolucao"]; ?></td>
+                  <td><a href="renovarEmprestimo.php?id=<?php echo $dado["id"]; ?>">Renovar</a></td>
+                </tr>
+                  <?php } ?>
+              </tbody>
+            </table>
+          </div>
         </main>
       </div>
     </div>

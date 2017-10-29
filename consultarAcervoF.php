@@ -38,7 +38,7 @@
               <a class="nav-link" href="consultarArcevoF.ph">Consultar Acervo<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="sobre.php">Sobre</a>
+              <a class="nav-link" href="sobreF.php">Sobre</a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">

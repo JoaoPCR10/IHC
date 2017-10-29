@@ -1,3 +1,9 @@
+<?php
+    include("class/conexao.php");
+    if(!isset($_SESSION))
+        session_start();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Atualizar Perfil</title>
+    <title>Devolução de Obra</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,10 +36,10 @@
               <a class="nav-link" href="#">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="consultarAcervo.php">Consultar Acervo</a>
+              <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="sobre.php">Sobre</a>
+              <a class="nav-link" href="sobreF.php">Sobre</a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">
@@ -48,16 +54,26 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link " href="pagUsuario.php">Perfil </a>
+              <a class="nav-link" href="pagUsuarioFunc.php">Perfil </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="reservasAluno.php">Reservas</a>
+              <a class="nav-link" href="reservasFunc.php">Reservas</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="obra.php">Obras</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="emprestimo.php">Emprestimo</a>
+            </li>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link active" href="devolucao.php">Devolução <span class="sr-only">(current)</span></a>
             </li>
           </ul>
 
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="atualizarPerfil.php">Atualizar Perfil<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="atualizarPerfil.php">Atualizar Perfil</a>
             </li>
              <br><br><br><br>
           </ul>
@@ -76,72 +92,20 @@
         </nav>
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h3 class="display-4">ATUALIZAR PERFIL</h3>
-            
-            
-            <?php 
-            
-    include("class/conexao.php");
+          <h1>Devolução de Obra</h1>
 
-	if(!isset($_SESSION))
-        session_start();
-
-        $sql_code = "SELECT * FROM usuario WHERE id = '$_SESSION[id]'";
-		$con = $mysqli->query($sql_code) or die($mysqli->error);
-		$dado = $con->fetch_assoc();
-               
-        echo $_SESSION['usuario_conectado'];
-?>
-              
-            <form method="POST" action="atlz_cad_usuario.php?id=<?php echo $dado["id"]; ?>">
+           <form method="POST" action="devolucao_obra.php">
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Nome</label>
-      <input type="text" class="form-control" name="nome" value="<?php echo $dado ["nome"];  ?>">
+    <div class="form-group col-md-2">
+      <label for="inputEmail4">ID da Obra</label>
+      <input type="text" class="form-control" name="idObra">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputPassword4">Sobrenome</label>
-      <input type="text" class="form-control" name="sobrenome" value="<?php echo $dado ["sobrenome"];  ?>">
+        <br>
+       <input class="btn btn-primary btn-lg" type="submit" value="Registrar">
     </div>
-  </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-      <label for="inputState">Sexo</label>
-      <select id="inputState" name="sexo" class="form-control">
-        <option selected><?php echo $dado ["sexo"];  ?></option>
-        <option>Feminino</option>
-        <option>Masculino</option>
-        <option>Prefiro não optar</option>
-            </select></div>
-     </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Curso</label>
-      <input type="text" class="form-control" name="curso" value="<?php echo $dado ["curso"];  ?>">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Matrícula</label>
-      <input type="text" class="form-control" name="matricula"  value="<?php echo $dado ["matricula"];  ?>">
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="text" class="form-control" name="email" value="<?php echo $dado ["email"];  ?>">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Senha</label>
-      <input type="password" class="form-control" name="senha" value="<?php echo $dado ["senha"];  ?>">
-    </div>
-  </div>
-        <br>        
-  <div class="form-group"> 
-       <input class="btn btn-primary btn-lg" type="submit" value="Atualizar">
-  </div>
-  
-            </form></div></main>
-      
-</form>
+  </div>       
+            </section>    
         </main>
       </div>
     </div>

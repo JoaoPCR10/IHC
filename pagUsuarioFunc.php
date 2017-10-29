@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Obras</title>
+    <title>SCB - Bbliotecário</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@
               <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="sobre.php">Sobre</a>
+              <a class="nav-link" href="sobreF.php">Sobre</a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">
@@ -54,17 +54,18 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link " href="pagUsuarioFunc.php">Perfil </a>
+              <a class="nav-link active" href="#">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="reservasFunc.php">Reservas</a>
             </li>
               <li class="nav-item">
-              <a class="nav-link active" href="obra.php">Obras<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="obra.php">Obras</a>
             </li>
               <li class="nav-item">
               <a class="nav-link" href="emprestimo.php">Emprestimo</a>
             </li>
+              </li>
               <li class="nav-item">
               <a class="nav-link" href="devolucao.php">Devolução</a>
             </li>
@@ -92,24 +93,25 @@
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
           <h1>Bem Vindo ao SCB</h1>
+<h2>Acesso Rápido</h2>
 
           <section class="row text-center placeholders">
             <div class="col-6 col-sm-3 placeholder">
-              <a href="cadastroObra.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <button type="button" class="btn btn-outline-primary btn-lg">Cadastrar</button>
+              <a href="consultarAcervoF.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              <button type="button" class="btn btn-outline-primary btn-lg">Consultar Acervo</button>
             </div>
             </a>    
             <div class="col-6 col-sm-3 placeholder">
-              <a href="consultarAcervoF.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Atualizar</button></a>
+              <a href="cadastroObra.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                  <button type="button" class="btn btn-outline-primary btn-lg">Cadastrar Obra</button></a>
             </div>
             <div class="col-6 col-sm-3 placeholder">
-              <a href="consultarAcervoF.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Excluir</button></a>
+              <a href="emprestimo.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                  <button type="button" class="btn btn-outline-primary btn-lg">Realizar Empréstimo</button></a>
             </div>
             <div class="col-6 col-sm-3 placeholder">
-              <a href="consultarAcervoF.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Buscar</button></a>
+              <a href="devolucao.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                  <button type="button" class="btn btn-outline-primary btn-lg">Realizar Devolução</button></a>
             </div>
           </section>
         </main>

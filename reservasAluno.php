@@ -57,11 +57,11 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="pagUsuario.php">Peril</a>
+              <a class="nav-link" href="pagUsuario.php">Perfil</a>
                 
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Reservas <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="reservasAluno.php">Reservas <span class="sr-only">(current)</span></a>
             </li>
               <li class="nav-item">
               <a class="nav-link" href="emprestimoAluno.php">Empréstimos</a>
