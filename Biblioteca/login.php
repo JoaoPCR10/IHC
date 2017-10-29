@@ -22,24 +22,27 @@ if(isset($_POST['login'])){
 
     if(count($erro) == 0){
 
-        $sql = "SELECT senha as senha, id FROM usuario WHERE email = '$_SESSION[email]'";
+        $sql = "SELECT senha as senha, id, niveldeacesso FROM usuario WHERE email = '$_SESSION[email]'";
         $que = $mysqli->query($sql) or die($mysqli->error);
         $dado = $que->fetch_assoc();
-        
-        
         
         if($que->num_rows == 0)
             $erro[] = "Nenhum usuário possui o <strong>e-mail</strong> informado.";
 
         elseif(strcmp($dado['senha'], ($senha)) == 0){
             $_SESSION['usuario_logado'] = $dado['id'];
-            
+            $_SESSION['nivel_acesso'] = $dado['niveldeacesso'];
+            $aluno=strcmp($_SESSION['nivel_acesso'],'Aluno');
+            $bibliotecario=strcmp($_SESSION['nivel_acesso'],'Bibliotecario');
         }else
             $erro[] = "<strong>Senha</strong> incorreta.";
 
         if(count($erro) == 0){
-            echo $dado['senha'];
-            //echo "<script>location.href='pagUsuario.php';</script>";
+            if($aluno==0)
+                echo "<script>location.href='pagUsuario.php';</script>";
+            elseif($bibliotecario==0){
+                echo "<script>location.href='pagUsuarioFunc.php';</script>";
+            }
         }
 
     }
@@ -50,7 +53,6 @@ if(isset($_POST['login'])){
 
 ?>
 
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -60,7 +62,7 @@ if(isset($_POST['login'])){
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Sobre o SCB</title>
+    <title>Login - SCB</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -83,8 +85,11 @@ if(isset($_POST['login'])){
           <li class="nav-item">
             <a class="nav-link" href="index.php">Home</a>
           </li>
-            <li class="nav-item active">
-            <a class="nav-link" href="#">Sobre <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Sobre </a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="cadastro.php">Cadastro </a>
           </li>
             <li>
                <div class="dropdown">

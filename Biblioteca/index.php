@@ -3,12 +3,11 @@ if(!isset($_SESSION))
     session_start();
 
 //Login de Usários
-
 if(isset($_POST['login'])){
 
   include('class/conexao.php');
-  
-  $erro = array();
+
+      $erro = array();
 
   // Captação de dados
     $senha = $_POST['password'];
@@ -23,30 +22,34 @@ if(isset($_POST['login'])){
 
     if(count($erro) == 0){
 
-        $sql = "SELECT senha as senha, id as valor 
-        FROM aluno 
-        WHERE email = '$_SESSION[email]'";
+        $sql = "SELECT senha as senha, id, niveldeacesso FROM usuario WHERE email = '$_SESSION[email]'";
         $que = $mysqli->query($sql) or die($mysqli->error);
         $dado = $que->fetch_assoc();
         
         if($que->num_rows == 0)
             $erro[] = "Nenhum usuário possui o <strong>e-mail</strong> informado.";
 
-        elseif(strcmp($dado[senha], ($senha)) == 0){
-            $_SESSION[usuario_logado] = $dado[valor];
+        elseif(strcmp($dado['senha'], ($senha)) == 0){
+            $_SESSION['usuario_logado'] = $dado['id'];
+            $_SESSION['nivel_acesso'] = $dado['niveldeacesso'];
+            $aluno=strcmp($_SESSION['nivel_acesso'],'Aluno');
+            $bibliotecario=strcmp($_SESSION['nivel_acesso'],'Bibliotecario');
         }else
             $erro[] = "<strong>Senha</strong> incorreta.";
 
         if(count($erro) == 0){
-            echo "<script>location.href='pagUsuario.php';</script>";
-            exit();
-            unset($_SESSION['email']);
+            if($aluno==0)
+                echo "<script>location.href='pagUsuario.php';</script>";
+            elseif($bibliotecario==0){
+                echo "<script>location.href='pagUsuarioFunc.php';</script>";
+            }
         }
 
     }
 
 
 }
+
 
 ?>
 
@@ -83,6 +86,7 @@ if(isset($_POST['login'])){
               <nav class="nav nav-masthead">
                 <a class="nav-link active" href="#">Home</a>
                 <a class="nav-link" href="sobre.php">Sobre</a>
+                <a class="nav-link" href="cadastro.php">Cadastrar</a>
                 <a class="nav-link" href="#"></a>
                   
                 <!--LOGIN-->
@@ -133,13 +137,13 @@ if(isset($_POST['login'])){
             <h1 class="cover-heading">SCB - Sistema de Controde de Biblioteca</h1>
             <p class="lead">Um Sistema de Controle de Biblioteca feito sob medida para os alunos e bibliotecários. </p>
             <p class="lead">
-              <a href="#" class="btn btn-lg btn-secondary">Buscar Obra</a>
+              <a href="login.php" class="btn btn-lg btn-secondary">Entrar</a>
             </p>
           </main>
 
           <footer class="mastfoot">
             <div class="inner">
-              <p>Desenvolvido para disciplica de Interação Humano Computador de 2017.3 da UFJF.</p>
+              <p>Desenvolvido para disciplina de Interação Humano Computador de 2017.3 da UFJF.</p>
             </div>
           </footer>
 

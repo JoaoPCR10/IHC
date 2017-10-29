@@ -1,3 +1,60 @@
+<?php
+if(!isset($_SESSION))
+    session_start();
+
+//Login de Usários
+if(isset($_POST['login'])){
+
+  include('class/conexao.php');
+
+      $erro = array();
+
+  // Captação de dados
+    $senha = $_POST['password'];
+    $_SESSION['email'] = $mysqli->escape_string($_POST['email']);
+
+    // Validação de dados
+    if(!filter_var($_SESSION['email'], FILTER_VALIDATE_EMAIL))
+        $erro[] = "Preencha seu <strong>e-mail</strong> corretamente.";
+
+    if(strlen($senha) < 6 || strlen($senha) > 16)
+        $erro[] = "Preencha sua <strong>senha</strong> corretamente.";
+
+    if(count($erro) == 0){
+
+        $sql = "SELECT senha as senha, id, niveldeacesso FROM usuario WHERE email = '$_SESSION[email]'";
+        $que = $mysqli->query($sql) or die($mysqli->error);
+        $dado = $que->fetch_assoc();
+        
+        if($que->num_rows == 0)
+            $erro[] = "Nenhum usuário possui o <strong>e-mail</strong> informado.";
+
+        elseif(strcmp($dado['senha'], ($senha)) == 0){
+            $_SESSION['usuario_logado'] = $dado['id'];
+            $_SESSION['nivel_acesso'] = $dado['niveldeacesso'];
+            $aluno=strcmp($_SESSION['nivel_acesso'],'Aluno');
+            $bibliotecario=strcmp($_SESSION['nivel_acesso'],'Bibliotecario');
+        }else
+            $erro[] = "<strong>Senha</strong> incorreta.";
+
+        if(count($erro) == 0){
+            if($aluno==0)
+                echo "<script>location.href='pagUsuario.php';</script>";
+            elseif($bibliotecario==0){
+                echo "<script>location.href='pagUsuarioFunc.php';</script>";
+            }
+        }
+
+    }
+
+
+}
+
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +64,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Cadastro de Usuário</title>
+    <title>Sobre o SCB</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,28 +82,56 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-         
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="index.php">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
+            <li class="nav-item">
+            <a class="nav-link" href="sobre.php">Sobre </a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            <li class="nav-item active">
+            <a class="nav-link" href="cadastro.php">Cadastro <span class="sr-only">(current)</span></a>
           </li>
-          </ul>
-      </div>
+            <li>
+               <div class="dropdown">
+                    <?php 
+                        if(isset($erro)) 
+                            if(count($erro) > 0){ ?>
+                                <div class="alert alert-danger">
+                                    <?php foreach($erro as $msg) echo "$msg <br>"; ?>
+                                </div>
+                            <?php 
+                            }
+                            ?>
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                  <form class="px-4 py-3" method="POST" action="">
+                    <div class="form-group">
+                      <label for="exampleDropdownFormEmail1">Email</label>
+                      <input value="<?php if(isset($_SESSION['email'])) echo $_SESSION['email']; ?>" class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleDropdownFormPassword1">Senha</label>
+                      < <input class="form-control" required placeholder="Senha" name="password" type="password" value="">
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                          <input name="remember" type="checkbox" value="Remember Me">Lembrar-me
+
+                      </label>
+                    </div>
+                    <button type="submit" name="login" value="true" class="btn btn-success btn-block">Login</button>
+                  </form>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="cadastro.php">Novo por aqui? Cadastre-se</a>
+                  <a class="dropdown-item" href="#">Esqueceu a senha?</a>
+                  </div>
+                </div>  
     </nav>
+
 
     <main role="main">
 
@@ -80,9 +165,9 @@
             <div class="form-group col-md-6">
       <label for="niveldeacesso">Sou</label>
       <select id="inputState" class="form-control" name="niveldeacesso">
-		<option value="">Selecione</option>
-		<option value="1" >Aluno</option>
-		<option value="2" >Bibliotecário</option>
+		<option>Selecione</option>
+		<option>Aluno</option>
+		<option value="Bibliotecario">Bibliotecário</option>
 	</select>
       </div>
                 </div>

@@ -61,10 +61,10 @@
                 
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Reservas <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#">Reservas</a>
             </li>
-              <li class="nav-item">
-              <a class="nav-link" href="emprestimoAluno.php">Empréstimos</a>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Empréstimos<span class="sr-only">(current)</span></a>
             </li>
           </ul>
 
@@ -92,7 +92,7 @@
           
 <?php
     //echo $_SESSION['usuario_logado'];
-    $consulta = "SELECT * FROM reserva WHERE id_aluno LIKE '$_SESSION[usuario_logado]'";
+    $consulta = "SELECT * FROM emprestimo WHERE idaluno LIKE '$_SESSION[usuario_logado]'";
     $con = mysqli_query($conn,$consulta);
     
    
@@ -108,14 +108,15 @@
                   <th>Assunto</th>
                   <th>Editora</th>
                   <th>Ano</th>
+                  <th>Data de Empréstimo</th>
                   <th>Data de Devolução</th>
-                  <th>Cancelar</th>
+                  <th>Renovar</th>
                 </tr>
               </thead>
               <tbody>
                 <?php 
                     while ($dado = $con->fetch_array()){
-                        $consultal = "SELECT * FROM obra WHERE id = $dado[id_obra]";
+                        $consultal = "SELECT * FROM obra WHERE id = $dado[idobra]";
                         $con = mysqli_query($conn,$consultal);
                         $dadol = $con->fetch_array();   
                   
@@ -126,8 +127,9 @@
                   <td><?php echo $dadol ["assunto"]; ?></td>
                   <td><?php echo $dadol ["editora"]; ?></td>
                   <td><?php echo $dadol ["ano"]; ?></td>
-                  <td><?php echo $dado ["data"]; ?></td>
-                  <td><a href="cancelaReserva.php?id=<?php echo $dado["id"]; ?>">Cancelar</a></td>
+                  <td><?php echo $dado ["dataemprestimo"]; ?></td>
+                  <td><?php echo $dado ["datadevolucao"]; ?></td>
+                  <td><a href="renovarEmprestimo.php?id=<?php echo $dado["id"]; ?>">Renovar</a></td>
                 </tr>
                   <?php } ?>
               </tbody>

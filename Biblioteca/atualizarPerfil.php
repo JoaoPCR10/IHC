@@ -90,7 +90,7 @@
 		$con = $mysqli->query($sql_code) or die($mysqli->error);
 		$dado = $con->fetch_assoc();
                
-        echo $_SESSION['id'];
+        echo $_SESSION['usuario_conectado'];
 ?>
               
             <form method="POST" action="atlz_cad_usuario.php?id=<?php echo $dado["id"]; ?>">

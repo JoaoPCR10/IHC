@@ -1,5 +1,7 @@
 <?php
     include("class/conexao.php");
+    if(!isset($_SESSION))
+        session_start();
 ?>
 
 <!doctype html>

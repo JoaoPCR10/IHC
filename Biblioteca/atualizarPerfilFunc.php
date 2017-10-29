@@ -1,9 +1,3 @@
-<?php
-    include("class/conexao.php");
-    if(!isset($_SESSION))
-        session_start();
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>SCB - Bbliotecário</title>
+    <title>Atualizar Perfil</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -52,9 +46,10 @@
     <div class="container-fluid">
       <div class="row">
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-          <ul class="nav nav-pills flex-column">
+          
+            <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Perfil <span class="sr-only">(current)</span></a>
+              <a class="nav-link " href="#">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="reservasFunc.php">Reservas</a>
@@ -63,17 +58,16 @@
               <a class="nav-link" href="obra.php">Obras</a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="emprestimo.php">Emprestimo</a>
+              <a class="nav-link" href="emprestimo.php">Emprestimo </a>
             </li>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="devolucao.php">Devolução</a>
             </li>
           </ul>
-
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="atualizarPerfil.php">Atualizar Perfil</a>
+              <a class="nav-link active" href="atualizarPerfilFunc.php">Atualizar Perfil<span class="sr-only">(current)</span></a>
             </li>
              <br><br><br><br>
           </ul>
@@ -92,28 +86,72 @@
         </nav>
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h1>Bem Vindo ao SCB</h1>
-<h2>Acesso Rápido</h2>
+          <h3 class="display-4">ATUALIZAR PERFIL</h3>
+            
+            
+            <?php 
+            
+    include("class/conexao.php");
 
-          <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="consultarAcervoF.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <button type="button" class="btn btn-outline-primary btn-lg">Consultar Acervo</button>
-            </div>
-            </a>    
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="cadastroObra.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Cadastrar Obra</button></a>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="emprestimo.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Realizar Empréstimo</button></a>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="devolucao.php"><img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Realizar Devolução</button></a>
-            </div>
-          </section>
+	if(!isset($_SESSION))
+        session_start();
+
+        $sql_code = "SELECT * FROM usuario WHERE id = '$_SESSION[id]'";
+		$con = $mysqli->query($sql_code) or die($mysqli->error);
+		$dado = $con->fetch_assoc();
+               
+        echo $_SESSION['usuario_conectado'];
+?>
+              
+            <form method="POST" action="atlz_cad_usuario.php?id=<?php echo $dado["id"]; ?>">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Nome</label>
+      <input type="text" class="form-control" name="nome" value="<?php echo $dado ["nome"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Sobrenome</label>
+      <input type="text" class="form-control" name="sobrenome" value="<?php echo $dado ["sobrenome"];  ?>">
+    </div>
+  </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+      <label for="inputState">Sexo</label>
+      <select id="inputState" name="sexo" class="form-control">
+        <option selected><?php echo $dado ["sexo"];  ?></option>
+        <option>Feminino</option>
+        <option>Masculino</option>
+        <option>Prefiro não optar</option>
+            </select></div>
+     </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Curso</label>
+      <input type="text" class="form-control" name="curso" value="<?php echo $dado ["curso"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Matrícula</label>
+      <input type="text" class="form-control" name="matricula"  value="<?php echo $dado ["matricula"];  ?>">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="text" class="form-control" name="email" value="<?php echo $dado ["email"];  ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Senha</label>
+      <input type="password" class="form-control" name="senha" value="<?php echo $dado ["senha"];  ?>">
+    </div>
+  </div>
+        <br>        
+  <div class="form-group"> 
+       <input class="btn btn-primary btn-lg" type="submit" value="Atualizar">
+  </div>
+  
+            </form></div></main>
+      
+</form>
         </main>
       </div>
     </div>

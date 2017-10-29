@@ -1,4 +1,8 @@
-
+<?php
+    include("class/conexao.php");
+    if(!isset($_SESSION))
+        session_start();
+?>
 
 <!doctype html>
 <html lang="en">
@@ -32,7 +36,7 @@
               <a class="nav-link" href="#">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="consultarAcervo.php">Consultar Acervo</a>
+              <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="sobre.php">Sobre</a>
@@ -50,16 +54,19 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link " href="#">Perfil </a>
+              <a class="nav-link " href="pagUsuarioFunc.php">Perfil </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="reservasAluno.php">Reservas</a>
+              <a class="nav-link" href="reservasFunc.php">Reservas</a>
             </li>
               <li class="nav-item">
               <a class="nav-link active" href="obra.php">Obras<span class="sr-only">(current)</span></a>
             </li>
               <li class="nav-item">
               <a class="nav-link" href="emprestimo.php">Emprestimo</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="devolucao.php">Devolução</a>
             </li>
           </ul>
 

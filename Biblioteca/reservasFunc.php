@@ -39,7 +39,7 @@
               <a class="nav-link" href="pagUsuario.php">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="consultarAcervo.php">Consultar Acervo</a>
+              <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="sobre.php">Sobre</a>
@@ -57,14 +57,20 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="pagUsuario.php">Peril</a>
-                
+              <a class="nav-link" href="pagUsuarioFunc.php">Perfil </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Reservas <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="reservasFunc.php">Reservas<span class="sr-only">(current)</span></a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="emprestimoAluno.php">Empréstimos</a>
+              <a class="nav-link" href="obra.php">Obras</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="emprestimo.php">Emprestimo</a>
+            </li>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="devolucao.php">Devolução </a>
             </li>
           </ul>
 
@@ -92,23 +98,23 @@
           
 <?php
     //echo $_SESSION['usuario_logado'];
-    $consulta = "SELECT * FROM reserva WHERE id_aluno LIKE '$_SESSION[usuario_logado]'";
+    $consulta = "SELECT * FROM reserva";
     $con = mysqli_query($conn,$consulta);
     
    
 ?>              
             
-          <h2>Suas Reservas</h2>
+          <h2>Reservas</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
+                  <th>Aluno</th>
+                  <th>Matrícula</th>
                   <th>Título</th>
                   <th>Autor</th>
-                  <th>Assunto</th>
                   <th>Editora</th>
-                  <th>Ano</th>
-                  <th>Data de Devolução</th>
+                  <th>Data de Reserva</th>
                   <th>Cancelar</th>
                 </tr>
               </thead>

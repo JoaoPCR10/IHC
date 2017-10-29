@@ -1,10 +1,7 @@
 <?php
-	include_once("conexao.php");
- 
+    include("class/conexao.php");
     if(!isset($_SESSION))
         session_start();
-   
-    
 ?>
 
 <!doctype html>
@@ -16,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Reservas</title>
+    <title>Empréstimo de Obra</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,10 +33,10 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="pagUsuario.php">Perfil <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="consultarAcervo.php">Consultar Acervo</a>
+              <a class="nav-link" href="consultarAcervoF.php">Consultar Acervo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="sobre.php">Sobre</a>
@@ -57,14 +54,20 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="pagUsuario.php">Peril</a>
-                
+              <a class="nav-link " href="#">Perfil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Reservas <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="reservasFunc.php">Reservas</a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="emprestimoAluno.php">Empréstimos</a>
+              <a class="nav-link" href="obra.php">Obras</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link active" href="emprestimo.php">Emprestimo <span class="sr-only">(current)</span></a>
+            </li>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="devolucao.php">Devolução</a>
             </li>
           </ul>
 
@@ -89,50 +92,29 @@
         </nav>
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          
-<?php
-    //echo $_SESSION['usuario_logado'];
-    $consulta = "SELECT * FROM reserva WHERE id_aluno LIKE '$_SESSION[usuario_logado]'";
-    $con = mysqli_query($conn,$consulta);
-    
-   
-?>              
-            
-          <h2>Suas Reservas</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Título</th>
-                  <th>Autor</th>
-                  <th>Assunto</th>
-                  <th>Editora</th>
-                  <th>Ano</th>
-                  <th>Data de Devolução</th>
-                  <th>Cancelar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php 
-                    while ($dado = $con->fetch_array()){
-                        $consultal = "SELECT * FROM obra WHERE id = $dado[id_obra]";
-                        $con = mysqli_query($conn,$consultal);
-                        $dadol = $con->fetch_array();   
-                  
-                ?>
-                <tr>
-                  <td><?php echo $dadol ["titulo"]; ?></td>
-                  <td><?php echo $dadol ["autor"]; ?></td>
-                  <td><?php echo $dadol ["assunto"]; ?></td>
-                  <td><?php echo $dadol ["editora"]; ?></td>
-                  <td><?php echo $dadol ["ano"]; ?></td>
-                  <td><?php echo $dado ["data"]; ?></td>
-                  <td><a href="cancelaReserva.php?id=<?php echo $dado["id"]; ?>">Cancelar</a></td>
-                </tr>
-                  <?php } ?>
-              </tbody>
-            </table>
-          </div>
+          <h1>Empréstimo de Obra</h1>
+
+           <form method="POST" action="emprestimo_obra.php">
+          <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="inputEmail4">ID da Obra</label>
+                  <input type="text" class="form-control" name="idObra">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputEmail4">ID da Aluno</label>
+                  <input type="text" class="form-control" name="idAluno"> 
+                </div>
+              <div class="form-group col-md-2">
+                    <label for="inputEmail4">Data de Empréstimo</label>
+                  <input type="date" class="form-control" name="data"> 
+                </div>
+               </div>
+               <div class="form-row">
+                  <div class="form-group">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Registrar">
+                  </div>
+               </div>        
+            </section>    
         </main>
       </div>
     </div>

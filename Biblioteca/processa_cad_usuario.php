@@ -1,5 +1,6 @@
 <?php
 	include_once("conexao.php");
+
 	$nome_usuario = $_POST['nome'];
 	$sobrenome_usuario = $_POST['sobrenome'];
     $sexo_usuario = $_POST['sexo'];
@@ -10,7 +11,7 @@
     $senha_usuario = $_POST['senha'];
     //echo "$nome_usuario - $email_usuario";
 	
-    $result_usuario = "INSERT INTO usuario (nome, sobrenome, email, senha, sexo, niveldeacesso, curso, matricula) VALUES ('$nome_usuario','$sobrenome_usuario','$email_usuario','$senha_usuario','$acesso_usuario','$sexo_usuario','$curso_usuario','$matricula_usuario')";
+    $result_usuario = "INSERT INTO usuario (nome, sobrenome, email, senha, sexo, niveldeacesso, curso, matricula) VALUES ('$nome_usuario','$sobrenome_usuario','$email_usuario','$senha_usuario','$sexo_usuario','$acesso_usuario','$curso_usuario','$matricula_usuario')";
 	$resultado_usuario = mysqli_query($conn, $result_usuario);
 	
 	if(mysqli_affected_rows($conn) != 0){

@@ -1,4 +1,8 @@
-
+<?php
+    include("class/conexao.php");
+    if(!isset($_SESSION))
+        session_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -28,7 +32,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="pagUsuario.php">Perfil </a>
+              <a class="nav-link" href="pagUsuarioFunc.php">Perfil </a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="consultarArcevoF.ph">Consultar Acervo<span class="sr-only">(current)</span></a>

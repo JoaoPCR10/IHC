@@ -6,11 +6,11 @@ if(!isset($_SESSION))
 if(isset($_POST['login'])){
 
   include('class/conexao.php');
-  
-  $erro = array();
+
+      $erro = array();
 
   // Captação de dados
-    $senha = $_POST[password];
+    $senha = $_POST['password'];
     $_SESSION['email'] = $mysqli->escape_string($_POST['email']);
 
     // Validação de dados
@@ -22,24 +22,28 @@ if(isset($_POST['login'])){
 
     if(count($erro) == 0){
 
-        $sql = "SELECT senha as senha, id as valor 
-        FROM aluno 
-        WHERE email = '$_SESSION[email]'";
+        $sql = "SELECT senha as senha, id, niveldeacesso FROM usuario WHERE email = '$_SESSION[email]'";
         $que = $mysqli->query($sql) or die($mysqli->error);
         $dado = $que->fetch_assoc();
         
         if($que->num_rows == 0)
             $erro[] = "Nenhum usuário possui o <strong>e-mail</strong> informado.";
 
-        elseif(strcmp($dado[senha], ($senha)) == 0){
-            $_SESSION[usuario_logado] = $dado[valor];
+        elseif(strcmp($dado['senha'], ($senha)) == 0){
+            $_SESSION['usuario_logado'] = $dado['id'];
+            $_SESSION['nivel_acesso'] = $dado['niveldeacesso'];
+            echo $_SESSION['nivel_acesso'];
+            $aluno=strcmp($_SESSION['nivel_acesso'],'Aluno');
+            $bibliotecario=strcmp($_SESSION['nivel_acesso'],'Bibliotecario');
         }else
             $erro[] = "<strong>Senha</strong> incorreta.";
 
         if(count($erro) == 0){
-            echo "<script>location.href='pagUsuario.php';</script>";
-            exit();
-            unset($_SESSION['email']);
+            if($aluno==0)
+                echo "<script>location.href='pagUsuario.php';</script>";
+            elseif($bibliotecario==0){
+                echo "<script>location.href='pagUsuarioFunc.php';</script>";
+            }
         }
 
     }
@@ -47,7 +51,9 @@ if(isset($_POST['login'])){
 
 }
 
+
 ?>
+
 
 
 <!doctype html>
@@ -83,6 +89,9 @@ if(isset($_POST['login'])){
           </li>
             <li class="nav-item active">
             <a class="nav-link" href="#">Sobre <span class="sr-only">(current)</span></a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="cadastro.php">Cadastro</a>
           </li>
             <li>
                <div class="dropdown">
@@ -131,8 +140,8 @@ if(isset($_POST['login'])){
         <div class="container">
           <h1 class="display-2">SCB</h1>
             <h4>SISTEMA DE CONTROLE DE BIBLIOTECA</h4>
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+          <p>Esse é um Sistma de Controle de Biblioteca desenvolvido pro alunos da Universudade Federal de Juiz de Fora para a disciplina de Interação Humano Computador DCC174-2017.3.</p>
+            <p><b>Prof.:</b>André Luis de Oliveira</p>
         </div>
       </div>
 
@@ -140,19 +149,19 @@ if(isset($_POST['login'])){
         <!-- Example row of columns -->
         <div class="row">
           <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <h2>João Pedro Carvalho</h2>
+            <p>Engenharia Computacional</p>
+            <p>201265017AB</p>
           </div>
           <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <h2>João Victor Guimarães</h2>
+            <p>Ciência da Computação</p>
+            <p>201465732AC</p>
           </div>
           <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <h2>Ramon Vaz Larivoir</h2>
+            <p>Sistemas de Informação</p>
+            <p>201776018</p>
           </div>
         </div>
 
@@ -161,10 +170,6 @@ if(isset($_POST['login'])){
       </div> <!-- /container -->
 
     </main>
-
-    <footer class="container">
-      <p>&copy; Company 2017</p>
-    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

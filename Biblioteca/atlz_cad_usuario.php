@@ -26,20 +26,4 @@
                 
 	$resultado_obra = mysqli_query($conn, $result_obra);
 	
-	/*if(mysqli_affected_rows($conn) != 0){
-				echo "
-					<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=http://localhost/Biblioteca/pagUsuario.php'>
-					<script type=\"text/javascript\">
-						alert(\"Perfil atualizada com Sucesso.\");
-					</script>
-        		";	
-			}else{
-				echo "
-					<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=http://localhost/Biblioteca/pagUsuario.php'>
-					<script type=\"text/javascript\">
-						alert(\"O Perfil não foi atualizada com Sucesso.\");
-					</script>
-				";	
-			
-    }*/
 ?>

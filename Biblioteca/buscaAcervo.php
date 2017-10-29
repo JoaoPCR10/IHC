@@ -1,5 +1,7 @@
 <?php
     include("class/conexao.php");
+    if(!isset($_SESSION))
+        session_start();
 ?>
 
 <!doctype html>
@@ -60,13 +62,13 @@
         $consulta = "SELECT * FROM obra WHERE autor LIKE '%$busca%'";
         $con = $mysqli->query($consulta) or die ($mysqli->error());
     }else if($filtro=='Assunto'){
-        $consulta = "SELECT * FROM obra WHERE titulo LIKE '%$busca%'";
+        $consulta = "SELECT * FROM obra WHERE assunto LIKE '%$busca%'";
         $con = $mysqli->query($consulta) or die ($mysqli->error());
     }else if($filtro=='Editora'){
-        $consulta = "SELECT * FROM obra WHERE titulo LIKE '%$busca%'";
+        $consulta = "SELECT * FROM obra WHERE editora LIKE '%$busca%'";
         $con = $mysqli->query($consulta) or die ($mysqli->error());
     }else if($filtro=='Ano'){
-        $consulta = "SELECT * FROM obra WHERE titulo LIKE '%$busca%'";
+        $consulta = "SELECT * FROM obra WHERE ano LIKE '%$busca%'";
         $con = $mysqli->query($consulta) or die ($mysqli->error());
     }else 
    
